@@ -4,7 +4,7 @@
 set -x
 
 _output_directory=/home/alex/coding
-_build_date=$(date +"%Y-%m-%d")
+_build_date=$(date -d "Last Mon" +"%Y-%m-%d")
 _zap_directory="${_output_directory}/ZAP_D-${_build_date}"
 _zap_archive="${_output_directory}/ZAP_WEEKLY_D-${_build_date}.zip"
 _zap_current_link="${_output_directory}/ZAP_D_CURRENT"
@@ -30,8 +30,9 @@ ln -s ${_zap_directory} ${_zap_current_link}
 
 cat > ~/.local/share/applications/zaproxy-weekly.desktop << EOF
 [Desktop Entry]
-Name=zap weekly
-Comment=ZAP Weekly ${_build_date}
+Name=zaproxy
+GenericName=ZAP Weekly Build ${_build_date}
+Comment=The OWASP Zed Attack Proxy (ZAP)
 Encoding=UTF-8
 Exec=sh -c "${_zap_current_link}/zap.sh"
 Icon=kali-zaproxy.png
