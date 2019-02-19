@@ -3,8 +3,12 @@
 
 set -x
 
+if [ `date +"%a"` = "Mon" ]; then
+	_build_date=$(date +"%Y-%m-%d")
+else
+	_build_date=$(date -d "Last Mon" +"%Y-%m-%d")
+fi
 _output_directory=/home/alex/coding
-_build_date=$(date -d "Last Mon" +"%Y-%m-%d")
 _zap_directory="${_output_directory}/ZAP_D-${_build_date}"
 _zap_archive="${_output_directory}/ZAP_WEEKLY_D-${_build_date}.zip"
 _zap_current_link="${_output_directory}/ZAP_D_CURRENT"
