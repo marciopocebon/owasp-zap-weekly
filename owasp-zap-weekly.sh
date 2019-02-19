@@ -8,37 +8,32 @@ if [ `date +"%a"` = "Mon" ]; then
 else
 	_build_date=$(date -d "Last Mon" +"%Y-%m-%d")
 fi
-_output_directory=/home/alex/coding
-_zap_directory="${_output_directory}/ZAP_D-${_build_date}"
-_zap_archive="${_output_directory}/ZAP_WEEKLY_D-${_build_date}.zip"
-_zap_current_link="${_output_directory}/ZAP_D_CURRENT"
 _download_url="https://github.com/zaproxy/zaproxy/releases/download"
+_zap_archive="/tmp/ZAP_WEEKLY_D-${_build_date}.zip"
+_zap_directory="${HOME}/ZAP_D-${_build_date}"
 
 if [ -d "${_zap_directory}" ]; then
 	echo "${_zap_directory} already exists."
 elif [ -f "${_zap_archive}" ]; then
-	unzip -d ${_output_directory} ${_zap_archive}
+	unzip -d ${HOME} ${_zap_archive}
 else
-	wget -q -c -P "${_output_directory}" \
+	wget -q -c -P /tmp \
 	"${_download_url}/w${_build_date}/ZAP_WEEKLY_D-${_build_date}.zip"
 	if [ -f "${_zap_archive}" ]; then
-		unzip -d ${_output_directory} ${_zap_archive}
+		unzip -d ${HOME} ${_zap_archive}
 	else
 		echo "Downloading failed. Quit"
 		exit 1
 	fi
 fi
 
-unlink ${_zap_current_link}
-ln -s ${_zap_directory} ${_zap_current_link}
-
-cat > ~/.local/share/applications/zaproxy-weekly.desktop << EOF
+cat > ${HOME}/.local/share/applications/owasp-zap-weekly.desktop << EOF
 [Desktop Entry]
-Name=zaproxy
+Name=owasp-zap-weekly
 GenericName=ZAP Weekly Build ${_build_date}
 Comment=The OWASP Zed Attack Proxy (ZAP)
 Encoding=UTF-8
-Exec=sh -c "${_zap_current_link}/zap.sh"
+Exec=sh -c "${HOME}/ZAP_D-${_build_date}/zap.sh"
 Icon=kali-zaproxy.png
 StartupNotify=false
 Terminal=false

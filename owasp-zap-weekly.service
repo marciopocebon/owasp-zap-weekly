@@ -1,0 +1,6 @@
+[Unit]
+Description=OWASP ZAP weekly build service
+
+[Service]
+Type=oneshot
+ExecStart=/bin/bash -c "$HOME/.local/bin/owasp-zap-weekly.sh"

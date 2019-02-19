@@ -1,6 +1,0 @@
-[Unit]
-Description=ZAP weekly-build download service
-
-[Service]
-Type=oneshot
-ExecStart=/bin/bash /home/alex/coding/zaproxy_weekly/zaproxy_weekly.sh
